@@ -1,0 +1,61 @@
+\documentclass[12pt,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=1.5cm,lmargin=1.5cm,rmargin=1.5cm}
+\usepackage{amssymb}
+\usepackage{babel}
+\author{Saul Toscano-Palmerin}
+\date{}
+\begin{document}
+
+\title{Multifidelity Example}
+
+\maketitle
+We consider the following problem
+\[
+\mbox{max}_{x\in A}F\left(x\right)
+\]
+where $A\subset\mathbb{R}^{n}$ is the feasible set.
+
+We have two information sources of $F$, $f$ and $g$. We suppose that $f$
+is an unbiased estimate of $F$, but it is noisy, and $g$ is a biased
+estimate of $F$, but it is deterministic.
+
+We define the value of information functions as
+
+\[
+V_{n}\left(x,h\right)=\mathbb{E}\left[\mbox{max}_{z}\mu_{n+1}\left(z,h_{1}\right)-\mbox{max}_{z}\mu_{n}\left(z,h_{1}\right)\mid x_{n+1}=x,h\left(x\right)\right]
+\]
+
+where $h,h_{1}\in\left\{ F,g\right\} $.
+
+
+\paragraph{Algorithm.}
+
+\begin{enumerate}
+\item (First stage of samples) Use maximum likelihood or maximum a posteriori estimation to fit the
+parameters $\alpha_{0}\left(\cdot\right),\beta_{0}\left(\cdot,\cdot\right)$
+of the GP prior on $F$, and $\rho_{0}\left(\cdot\right),\Lambda_{0}\left(\cdot,\cdot\right)$
+of the GP prior on $\delta=F-g$. We denote the parameters of the joint GP on $F$ and $g$ by
+$\mu_{0},\Sigma_{0}$\\
+ \textrm{}\\
+\item (Main stage of samples) For $n\leftarrow1$ to $N$ do
+\begin{enumerate}
+    \item Update our joint Gaussian process posterior on $F,g$ using all samples by time $n$.\\
+    \textrm{}\\
+\item Solve $\left(x_{n+1},h_{n+1}\right)\in\mbox{arg max}_{x\in A,h\in\left\{ F,g\right\} }V_{n}\left(x,h\right)$\\
+\textrm{}\\
+\item Evaluate $h_{n+1}\left(x_{n+1}\right)$\\
+\textrm{}\\
+\end{enumerate}
+\item Return $x^{*}=\mbox{arg max}_{x}\mu_{N+1}\left(x,h\right)$ where $h\in\left\{ F,g\right\}$.
+\end{enumerate}
+
+
+\paragraph{Example.}
+
+We draw $F\sim GP\left(0,\Sigma_{0}\right)$ where $\Sigma_{0}\left(x,y\right)=\mbox{exp}\left(\sum_{i=1}^{4}\frac{1}{2}\left(x_{i}-y_{i}\right)^{2}\right)$,
+and we define $g=F+GP\left(0,\Sigma^{*}\right)$ where $\Sigma^{*}\left(x,y\right)=0.5\mbox{exp}\left(\sum_{i=1}^{4}\frac{1}{10}\left(x_{i}-y_{i}\right)^{2}\right)$.
+We also define $f=F+N\left(0,1\right)$. 
+\end{document}
