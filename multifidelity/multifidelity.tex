@@ -31,7 +31,7 @@ We define the value of information functions as
 V_{n}\left(x,h\right)=\mathbb{E}\left[\mbox{max}_{z}\mu_{n+1}\left(z,F\right)-\mbox{max}_{z,}\mu_{n}\left(z,F\right)\mid x_{n+1}=x,h\left(x\right)\right]
 \]
 
-where $h\in\left\{ g,f\right\} $.
+where $h\in\left\{ g,f_{n+1}\right\} $.
 
 
 \paragraph{Algorithm.}
@@ -52,7 +52,7 @@ $\mu_{0},\Sigma_{0}$\\
 \item Evaluate $h_{n+1}\left(x_{n+1}\right)$\\
 \textrm{}\\
 \end{enumerate}
-\item Return $x^{*}=\mbox{arg max}_{x}\mu_{N+1}\left(x,f\right)$.
+\item Return $x^{*}=\mbox{arg max}_{x}\mu_{N+1}\left(x,F\right)$.
 \end{enumerate}
 
 
