@@ -1,0 +1,300 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.5cm
+\topmargin 1.5cm
+\rightmargin 1.5cm
+\bottommargin 1.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Information Sources with Combined Outputs
+\end_layout
+
+\begin_layout Section*
+1 Mathematical Formulation
+\end_layout
+
+\begin_layout Standard
+We consider an optimization problem that combines multiple independent informati
+on sources,
+\begin_inset Formula 
+\[
+\mbox{max}_{x\in A}g\left(x\right):=\mbox{max}_{x\in A}g\left(f_{1}\left(x\right),\ldots,f_{k}\left(x\right)\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Applications
+\end_layout
+
+\begin_layout Subsection*
+1 Machine Learning.
+\end_layout
+
+\begin_layout Standard
+We have many terabytes of training data 
+\begin_inset Formula $\left\{ \left(x_{i},y_{i}\right)\right\} _{i=1}^{N}$
+\end_inset
+
+ where 
+\begin_inset Formula $\left\{ x_{i}\right\} _{i=1}^{N}$
+\end_inset
+
+ are the inputs and 
+\begin_inset Formula $\left\{ y_{i}\right\} _{i=1}^{N}$
+\end_inset
+
+ are the outputs.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+Training Machine Learning Models
+\end_layout
+
+\begin_layout Standard
+We have a machine learning model (e.g.
+ logistic regression) that depends on a vector of parameters 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ Our data is spread across 
+\begin_inset Formula $k$
+\end_inset
+
+ disks.
+ 
+\end_layout
+
+\begin_layout Standard
+We want to choose 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ that maximizes the log-likelihood 
+\begin_inset Formula 
+\begin{eqnarray*}
+g\left(\alpha\right) & = & \sum_{s=1}^{k}\sum_{i\in\mbox{disk}_{s}}\mbox{log }p\left(y_{i}\mid x_{i},\alpha\right)\\
+ & = & \sum_{s=1}^{k}f_{s}\left(\alpha\right)
+\end{eqnarray*}
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+f_{s}\left(\alpha\right)=\sum_{i\in\mbox{disk}_{s}}\mbox{log }p\left(y_{i}\mid x_{i},\alpha\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Cross-Validation
+\end_layout
+
+\begin_layout Standard
+We have a set of models 
+\begin_inset Formula $f\left(x,\alpha\right)$
+\end_inset
+
+ indexed by the parameter 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ In K-Fold cross validation, we split the data into K equally sized sets.
+ We denote by 
+\begin_inset Formula $\hat{f}^{-k}\left(x\right)$
+\end_inset
+
+ the fitted function, estimated with the 
+\begin_inset Formula $k$
+\end_inset
+
+th set removed.
+ We want to choose 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ that minimizes
+\begin_inset Formula 
+\begin{eqnarray*}
+\mbox{CV}\left(\hat{f},\alpha\right) & = & \frac{1}{N}\sum_{i=1}^{N}L\left(y_{i},\hat{f}^{-k\left(i\right)}\left(x_{i},\alpha\right)\right)
+\end{eqnarray*}
+
+\end_inset
+
+where 
+\begin_inset Formula $L$
+\end_inset
+
+ is the loss function and 
+\begin_inset Formula $k\left(i\right)$
+\end_inset
+
+ is the set where 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is for 
+\begin_inset Formula $i\in\left\{ 1,\ldots,N\right\} $
+\end_inset
+
+.
+ Here each 
+\begin_inset Formula $L\left(y_{i},\hat{f}^{-k\left(i\right)}\left(x_{i},\alpha\right)\right)$
+\end_inset
+
+ is an information source.
+\end_layout
+
+\begin_layout Subsection*
+2 Simulation Optimization
+\end_layout
+
+\begin_layout Standard
+We want to solve 
+\begin_inset Formula 
+\[
+\mbox{max}_{x}\mathbb{E}\left[f\left(x,\omega\right)\right]
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $f$
+\end_inset
+
+ is a stochastic simulator, 
+\begin_inset Formula $\omega$
+\end_inset
+
+ is the randomness with a known probability distribution 
+\begin_inset Formula $p$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We define the information sources as 
+\begin_inset Formula $f_{s}\left(x\right):=f\left(x,\omega_{s}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula 
+\begin{eqnarray*}
+g\left(x\right) & = & g\left(f_{1}\left(x\right),\ldots,f_{k}\left(x\right),\ldots\right)\\
+ & = & \sum_{s}p\left(w_{s}\right)f_{s}\left(x\right)
+\end{eqnarray*}
+
+\end_inset
+
+if 
+\begin_inset Formula $\omega$
+\end_inset
+
+ takes countable values, 
+\begin_inset Formula $\omega_{1},\ldots,\omega_{k},\ldots$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\omega\in C$
+\end_inset
+
+ takes uncountable infinite values, then 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+g\left(x\right)=\int_{w}p\left(\omega\right)f_{s}\left(x,\omega\right)d\omega.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
