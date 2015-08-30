@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 ,ok,prueba
 additional
+=======
+test 
+,prueba
+INSERT NEW LINE
+>>>>>>> 87563d360a5788cd0096efaa9dd9bc10a0eeaa84
